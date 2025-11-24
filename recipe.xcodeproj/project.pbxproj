@@ -15,6 +15,7 @@
 		4E953AB92ED05B1E0083187E /* recipeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E953AB82ED05B1E0083187E /* recipeTests.swift */; };
 		4E953AC32ED05B1E0083187E /* recipeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E953AC22ED05B1E0083187E /* recipeUITests.swift */; };
 		4E953AC52ED05B1E0083187E /* recipeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E953AC42ED05B1E0083187E /* recipeUITestsLaunchTests.swift */; };
+		4E953AD32ED063060083187E /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E953AD22ED063060083187E /* Recipe.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		4E953ABE2ED05B1E0083187E /* recipeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = recipeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E953AC22ED05B1E0083187E /* recipeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeUITests.swift; sourceTree = "<group>"; };
 		4E953AC42ED05B1E0083187E /* recipeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		4E953AD22ED063060083187E /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 		4E953AA42ED05B1C0083187E /* recipe */ = {
 			isa = PBXGroup;
 			children = (
+				4E953AD12ED062C70083187E /* data */,
 				4E953AA52ED05B1C0083187E /* recipeApp.swift */,
 				4E953AA72ED05B1C0083187E /* ContentView.swift */,
 				4E953AA92ED05B1C0083187E /* Item.swift */,
@@ -128,6 +131,14 @@
 				4E953AC42ED05B1E0083187E /* recipeUITestsLaunchTests.swift */,
 			);
 			path = recipeUITests;
+			sourceTree = "<group>";
+		};
+		4E953AD12ED062C70083187E /* data */ = {
+			isa = PBXGroup;
+			children = (
+				4E953AD22ED063060083187E /* Recipe.swift */,
+			);
+			path = data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E953AA82ED05B1C0083187E /* ContentView.swift in Sources */,
+				4E953AD32ED063060083187E /* Recipe.swift in Sources */,
 				4E953AAA2ED05B1C0083187E /* Item.swift in Sources */,
 				4E953AA62ED05B1C0083187E /* recipeApp.swift in Sources */,
 			);

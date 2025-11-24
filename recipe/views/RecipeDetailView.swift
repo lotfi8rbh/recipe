@@ -1,21 +1,46 @@
 import SwiftUI
 
 struct RecipeDetailView: View {
-    // CORRECTION : Utilise @State pour que la vue puisse générer le Binding ($recipe)
     @State var recipe: Recipe
+    
+    // MARK: - Fonctionnalité Native : Image Picker
+    
+    @State private var showingImagePicker = false
+    @State private var inputUIImage: UIImage?
+    @State private var recipeImage: Image?   
+    
+    func loadImage() {
+        guard let inputImage = inputUIImage else { return }
+        recipeImage = Image(uiImage: inputImage)
+    }
+    
+    // MARK: - Corps de la Vue
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Image (Placeholder)
-                Rectangle()
-                    .fill(Color.gray.opacity(0.3))
+                
+                // Image (Placeholder cliquable et dynamique)
+                (recipeImage ?? Image(systemName: "photo"))
+                    .resizable()
+                    .scaledToFill()
                     .frame(height: 200)
+                    .clipped()
+                    .background(Color.gray.opacity(0.3)) // Fond si aucune image
                     .overlay(
-                        Image(systemName: "photo")
-                            .font(.largeTitle)
-                            .foregroundColor(.gray)
+                        Group {
+                            if recipeImage == nil {
+                                Image(systemName: "photo")
+                                    .font(.largeTitle)
+                                    .foregroundColor(.gray)
+                            } else {
+                                EmptyView()
+                            }
+                        }
                     )
+                    .onTapGesture {
+                        showingImagePicker = true
+                    }
                 
                 // Informations principales
                 VStack(alignment: .leading, spacing: 8) {
@@ -74,11 +99,14 @@ struct RecipeDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                // Le $recipe est maintenant accessible car il s'agit d'un @State
                 NavigationLink(destination: EditRecipeView(recipe: $recipe)) {
                     Text("Edit recipe")
                 }
             }
+        }
+        // Déclenche le sélecteur d'image
+        .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+            ImagePicker(image: $inputUIImage)
         }
     }
 }

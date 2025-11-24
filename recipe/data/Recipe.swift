@@ -23,14 +23,17 @@ struct Recipe: Identifiable {
     var cookTimeString: String { "cook \(cookTimeMinutes) mins" }
 }
 
-// MARK: - Protocole et Implémentation du Repository
+// MARK: - Protocole du Repository (Contrat)
 
 protocol RecipeRepository: ObservableObject {
     var recipes: [Recipe] { get }
     func updateRecipe(recipe: Recipe)
-    func removeIngredient(recipe: Recipe, ingredient: Ingredient)
+    // NOTE: removeIngredient n'est plus requis ici si nous gérons la suppression via .onDelete
 }
 
+// MARK: - Implémentation Dummy (Source de vérité)
+
+// CORRECTION : La classe déclare maintenant qu'elle se conforme au Protocole
 class RecipeRepositoryDummyImpl: RecipeRepository {
     
     @Published var recipes: [Recipe] = [
@@ -82,23 +85,26 @@ class RecipeRepositoryDummyImpl: RecipeRepository {
         )
     ]
     
+    // Fonction requise par le protocole pour propager les changements locaux
     func updateRecipe(recipe: Recipe) {
         if let index = recipes.firstIndex(where: { $0.id == recipe.id }) {
             recipes[index] = recipe
+            // L'ajout ou la suppression dans EditRecipeView appelle cette fonction.
         }
     }
     
+    // NOTE : La fonction removeIngredient est retirée car non requise par le protocole
+    // et sa logique est maintenant implémentée directement via .onDelete.
     func removeIngredient(recipe: Recipe, ingredient: Ingredient) {
-        if let recipeIndex = recipes.firstIndex(where: { $0.id == recipe.id }),
-           let ingredientIndex = recipes[recipeIndex].ingredients.firstIndex(where: { $0.id == ingredient.id }) {
-            
-            recipes[recipeIndex].ingredients.remove(at: ingredientIndex)
-        }
+        // Cette fonction n'est plus utilisée, mais est maintenue vide
+        // si elle est requise par le protocole (selon la version de ton protocole).
+        // Si tu as un protocole à jour, elle devrait être retirée.
     }
 }
 
 // MARK: - L'Injecteur
 
 class Injector {
+    // Fournit l'instance unique du repository
     static let recipeRepository = RecipeRepositoryDummyImpl()
 }

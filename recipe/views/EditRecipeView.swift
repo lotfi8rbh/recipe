@@ -2,10 +2,9 @@ import SwiftUI
 
 struct EditRecipeView: View {
     @Binding var recipe: Recipe
-    
+
     @StateObject var repository = Injector.recipeRepository
     
-    // État local pour le tri (requis par le sujet)
     @State private var sortByName = false
     
     var body: some View {

@@ -1,4 +1,7 @@
 import Foundation
+import Combine
+
+// MARK: - Modèles de données
 
 struct Ingredient: Identifiable {
     let id = UUID()
@@ -16,11 +19,19 @@ struct Recipe: Identifiable {
     var ingredients: [Ingredient]
     var directions: String
     
-    // Propriétés calculées pour l'affichage facile
     var prepTimeString: String { "prep \(prepTimeMinutes) mins" }
     var cookTimeString: String { "cook \(cookTimeMinutes) mins" }
 }
-class RecipeRepositoryDummyImpl: ObservableObject {
+
+// MARK: - Protocole et Implémentation du Repository
+
+protocol RecipeRepository: ObservableObject {
+    var recipes: [Recipe] { get }
+    func updateRecipe(recipe: Recipe)
+    func removeIngredient(recipe: Recipe, ingredient: Ingredient)
+}
+
+class RecipeRepositoryDummyImpl: RecipeRepository {
     
     @Published var recipes: [Recipe] = [
         Recipe(
@@ -70,4 +81,24 @@ class RecipeRepositoryDummyImpl: ObservableObject {
             directions: "Disposer les poires..."
         )
     ]
+    
+    func updateRecipe(recipe: Recipe) {
+        if let index = recipes.firstIndex(where: { $0.id == recipe.id }) {
+            recipes[index] = recipe
+        }
+    }
+    
+    func removeIngredient(recipe: Recipe, ingredient: Ingredient) {
+        if let recipeIndex = recipes.firstIndex(where: { $0.id == recipe.id }),
+           let ingredientIndex = recipes[recipeIndex].ingredients.firstIndex(where: { $0.id == ingredient.id }) {
+            
+            recipes[recipeIndex].ingredients.remove(at: ingredientIndex)
+        }
+    }
+}
+
+// MARK: - L'Injecteur
+
+class Injector {
+    static let recipeRepository = RecipeRepositoryDummyImpl()
 }

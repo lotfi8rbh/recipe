@@ -1,10 +1,3 @@
-//
-//  recipeUITestsLaunchTests.swift
-//  recipeUITests
-//
-//  Created by Lotfi RABAH on 21/11/2025.
-//
-
 import XCTest
 
 final class recipeUITestsLaunchTests: XCTestCase {

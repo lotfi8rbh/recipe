@@ -1,16 +1,14 @@
 import Foundation
 
-// MARK: - Modèles de données
-
 struct Ingredient: Identifiable {
-    let id = UUID() // Généré automatiquement, on ne le passe pas en paramètre
+    let id = UUID()
     var name: String
     var quantity: Double
     var unit: String
 }
 
 struct Recipe: Identifiable {
-    let id = UUID() // Généré automatiquement
+    let id = UUID()
     var name: String
     var prepTimeMinutes: Int
     var cookTimeMinutes: Int
@@ -22,10 +20,6 @@ struct Recipe: Identifiable {
     var prepTimeString: String { "prep \(prepTimeMinutes) mins" }
     var cookTimeString: String { "cook \(cookTimeMinutes) mins" }
 }
-
-// MARK: - Implémentation Dummy (Données en dur)
-
-// Note : On utilise une 'class' ici pour qu'elle puisse être partagée par référence
 class RecipeRepositoryDummyImpl: ObservableObject {
     
     @Published var recipes: [Recipe] = [
@@ -37,7 +31,7 @@ class RecipeRepositoryDummyImpl: ObservableObject {
             ingredients: [
                 Ingredient(name: "sugar", quantity: 200, unit: "g"),
                 Ingredient(name: "butter", quantity: 125, unit: "g"),
-                Ingredient(name: "eggs", quantity: 2, unit: ""), // Attention au type ici (Double implicite ou Int converti)
+                Ingredient(name: "eggs", quantity: 2, unit: ""),
                 Ingredient(name: "flour", quantity: 200, unit: "g"),
                 Ingredient(name: "baking powder", quantity: 10, unit: "g"),
                 Ingredient(name: "milk", quantity: 12.5, unit: "cl")
@@ -76,4 +70,4 @@ class RecipeRepositoryDummyImpl: ObservableObject {
             directions: "Disposer les poires..."
         )
     ]
-}	
+}

@@ -1,10 +1,3 @@
-//
-//  recipeTests.swift
-//  recipeTests
-//
-//  Created by Lotfi RABAH on 21/11/2025.
-//
-
 import XCTest
 @testable import recipe
 

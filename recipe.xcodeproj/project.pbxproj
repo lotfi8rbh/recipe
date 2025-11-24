@@ -16,6 +16,7 @@
 		4E953AC32ED05B1E0083187E /* recipeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E953AC22ED05B1E0083187E /* recipeUITests.swift */; };
 		4E953AC52ED05B1E0083187E /* recipeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E953AC42ED05B1E0083187E /* recipeUITestsLaunchTests.swift */; };
 		4E953AD32ED063060083187E /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E953AD22ED063060083187E /* Recipe.swift */; };
+		4EF2ED6D2ED4533100D87C24 /* RecipeArchitecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF2ED6C2ED4533100D87C24 /* RecipeArchitecture.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		4E953AC22ED05B1E0083187E /* recipeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeUITests.swift; sourceTree = "<group>"; };
 		4E953AC42ED05B1E0083187E /* recipeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipeUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4E953AD22ED063060083187E /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
+		4EF2ED6C2ED4533100D87C24 /* RecipeArchitecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeArchitecture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 		4E953AA42ED05B1C0083187E /* recipe */ = {
 			isa = PBXGroup;
 			children = (
+				4EF2ED6B2ED4530D00D87C24 /* repository */,
 				4E953AD12ED062C70083187E /* data */,
 				4E953AA52ED05B1C0083187E /* recipeApp.swift */,
 				4E953AA72ED05B1C0083187E /* ContentView.swift */,
@@ -139,6 +142,14 @@
 				4E953AD22ED063060083187E /* Recipe.swift */,
 			);
 			path = data;
+			sourceTree = "<group>";
+		};
+		4EF2ED6B2ED4530D00D87C24 /* repository */ = {
+			isa = PBXGroup;
+			children = (
+				4EF2ED6C2ED4533100D87C24 /* RecipeArchitecture.swift */,
+			);
+			path = repository;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,6 +286,7 @@
 				4E953AD32ED063060083187E /* Recipe.swift in Sources */,
 				4E953AAA2ED05B1C0083187E /* Item.swift in Sources */,
 				4E953AA62ED05B1C0083187E /* recipeApp.swift in Sources */,
+				4EF2ED6D2ED4533100D87C24 /* RecipeArchitecture.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

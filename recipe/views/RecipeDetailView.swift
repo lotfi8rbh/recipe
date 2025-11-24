@@ -49,7 +49,7 @@ struct RecipeDetailView: View {
                         HStack {
                             Text("• " + ingredient.name)
                             Spacer()
-                            Text("\(ingredient.quantity, specifier: "%.g") \(ingredient.unit)")
+                            Text("\(ingredient.quantity, specifier: "%.0f") \(ingredient.unit)")
                                 .foregroundColor(.secondary)
                         }
                     }

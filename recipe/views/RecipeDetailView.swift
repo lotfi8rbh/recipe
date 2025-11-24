@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct RecipeDetailView: View {
-    let recipe: Recipe
+    @State var recipe: Recipe
     
     var body: some View {
         ScrollView {
@@ -71,10 +71,11 @@ struct RecipeDetailView: View {
         }
         .navigationTitle(recipe.name)
         .navigationBarTitleDisplayMode(.inline)
-        // Bouton Edit recipe (sera utilisé plus tard pour la navigation vers l'édition)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Text("Edit recipe")
+                NavigationLink(destination: EditRecipeView(recipe: $recipe)) {
+                    Text("Edit recipe")
+                }
             }
         }
     }

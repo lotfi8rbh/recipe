@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct RecipeDetailView: View {
+    // CORRECTION : Utilise @State pour que la vue puisse générer le Binding ($recipe)
     @State var recipe: Recipe
     
     var body: some View {
@@ -73,6 +74,7 @@ struct RecipeDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
+                // Le $recipe est maintenant accessible car il s'agit d'un @State
                 NavigationLink(destination: EditRecipeView(recipe: $recipe)) {
                     Text("Edit recipe")
                 }

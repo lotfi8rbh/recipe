@@ -25,33 +25,33 @@ struct EditRecipeView: View {
                 
                 ForEach($recipe.ingredients) { $ingredient in
                     HStack {
+                        // Édition de la quantité
                         TextField("Quantité", value: $ingredient.quantity, format: .number)
                             .keyboardType(.decimalPad)
                             .frame(width: 80)
                             .multilineTextAlignment(.trailing)
                         
-                        Text($ingredient.name.wrappedValue.isEmpty ? "New Item" : $ingredient.name.wrappedValue)
-                            .lineLimit(1)
+                        // Nom de l'ingrédient (fixe le problème du 'wrappedValue')
+                        VStack(alignment: .leading) {
+                            TextField("Nom de l'ingrédient", text: $ingredient.name)
+                            
+                            TextField("Unité (ex: g, cl)", text: $ingredient.unit)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
                         
                         Spacer()
-                        
-                        Button(action: {
-                            repository.removeIngredient(recipe: recipe, ingredient: $ingredient.wrappedValue)
-                        }) {
-                            Image(systemName: "trash.circle.fill")
-                                .foregroundColor(.red)
-                        }
-                        .buttonStyle(.plain)
                     }
                 }
                 .onDelete { indices in
-                    if let recipeIndex = repository.recipes.firstIndex(where: { $0.id == recipe.id }) {
-                        repository.recipes[recipeIndex].ingredients.remove(atOffsets: indices)
-                    }
+                    recipe.ingredients.remove(atOffsets: indices)
+                    repository.updateRecipe(recipe: recipe)
                 }
                 
+                // Bouton d'ajout
                 Button("Add ingredient") {
-                    recipe.ingredients.append(Ingredient(name: "New Item", quantity: 1.0, unit: ""))
+                    recipe.ingredients.append(Ingredient(name: "", quantity: 1.0, unit: ""))
+                    repository.updateRecipe(recipe: recipe)
                 }
             }
             
@@ -62,6 +62,7 @@ struct EditRecipeView: View {
             }
         }
         .navigationTitle("Edit: \(recipe.name)")
+        .environment(\.editMode, .constant(.active))
     }
     
     // Helper pour gérer le Toggle de tri

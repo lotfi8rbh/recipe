@@ -5,6 +5,7 @@ struct EditRecipeView: View {
     
     @StateObject var repository = Injector.recipeRepository
     
+    // État local pour le tri (requis par le sujet)
     @State private var sortByName = false
     
     var body: some View {
@@ -23,19 +24,31 @@ struct EditRecipeView: View {
             // Section 2 : Ingrédients
             Section(header: ingredientsHeader) {
                 
-                ForEach($recipe.ingredients) { $ingredient in
+                // Calcul de la liste à afficher, triée ou non
+                let sortedIngredients = sortByName
+                    ? recipe.ingredients.sorted(by: { $0.name < $1.name })
+                    : recipe.ingredients
+                
+                // On utilise les indices de la liste triée pour obtenir le Binding correct
+                ForEach(sortedIngredients.indices, id: \.self) { index in
+                    // Obtient l'index de la recette non triée (originale)
+                    let ingredientIndex = recipe.ingredients.firstIndex(where: { $0.id == sortedIngredients[index].id })!
+                    
+                    // Crée le Binding vers l'élément original (pour la modification)
+                    let ingredientBinding = $recipe.ingredients[ingredientIndex]
+                    
                     HStack {
                         // Édition de la quantité
-                        TextField("Quantité", value: $ingredient.quantity, format: .number)
+                        TextField("Quantité", value: ingredientBinding.quantity, format: .number)
                             .keyboardType(.decimalPad)
                             .frame(width: 80)
                             .multilineTextAlignment(.trailing)
                         
-                        // Nom de l'ingrédient (fixe le problème du 'wrappedValue')
+                        // Nom de l'ingrédient (Champ modifiable)
                         VStack(alignment: .leading) {
-                            TextField("Nom de l'ingrédient", text: $ingredient.name)
+                            TextField("Nom de l'ingrédient", text: ingredientBinding.name)
                             
-                            TextField("Unité (ex: g, cl)", text: $ingredient.unit)
+                            TextField("Unité (ex: g, cl)", text: ingredientBinding.unit)
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -43,8 +56,13 @@ struct EditRecipeView: View {
                         Spacer()
                     }
                 }
+                // Suppression par 'swipe' (onDelete)
                 .onDelete { indices in
-                    recipe.ingredients.remove(atOffsets: indices)
+                    // Transforme les indices triés en indices réels à supprimer
+                    let indicesToRemove = indices.map { sortedIngredients[$0] }.compactMap { ingredientToDelete in
+                        recipe.ingredients.firstIndex(where: { $0.id == ingredientToDelete.id })
+                    }
+                    recipe.ingredients.remove(atOffsets: IndexSet(indicesToRemove))
                     repository.updateRecipe(recipe: recipe)
                 }
                 
